@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Edit Subject</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <mat-select formControlName="exam_name">
+      <ng-container *ngFor="let exam of exams$ | async">
+        <mat-option [value]="exam.exam_name">{{ exam.exam_name }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="exam_name.invalid">Examination is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="subject_code" />
+    <mat-error *ngIf="subject_code.invalid"
+      >Subject code is mandatory!</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput formControlName="subject_name" />
+    <mat-error *ngIf="subject_name.invalid"
+      >Subject name is mandatory!</mat-error
+    >
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button *ngIf="form.valid" mat-raised-button color="primary" (click)="save()">
+    Save
+  </button>
+  <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+</mat-dialog-actions>

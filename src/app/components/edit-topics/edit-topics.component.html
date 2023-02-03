@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Edit Topic</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <mat-select formControlName="subject">
+      <ng-container *ngFor="let subj of subject$ | async">
+        <mat-option [value]="subj.subject_code"
+          >{{ subj.subject_code }} - {{ subj.subject_name }}</mat-option
+        >
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="subject.invalid">Subject is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input placeholder="Topic" matInput formControlName="topic" />
+    <mat-error *ngIf="topic.invalid">Topic is mandatory!</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button *ngIf="form.valid" mat-raised-button color="primary" (click)="save()">
+    Save
+  </button>
+  <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+</mat-dialog-actions>
