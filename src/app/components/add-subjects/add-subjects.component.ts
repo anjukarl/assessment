@@ -23,7 +23,6 @@ export class AddSubjectsComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       exam_name: ['', Validators.required],
-      subject_code: ['', Validators.required],
       subject_name: ['', Validators.required],
     });
   }
@@ -49,10 +48,6 @@ export class AddSubjectsComponent implements OnInit {
 
   get exam_name() {
     return this.form.controls['exam_name'];
-  }
-
-  get subject_code() {
-    return this.form.controls['subject_code'];
   }
 
   get subject_name() {

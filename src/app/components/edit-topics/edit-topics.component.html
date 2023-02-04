@@ -4,9 +4,9 @@
   <mat-form-field>
     <mat-select formControlName="subject">
       <ng-container *ngFor="let subj of subject$ | async">
-        <mat-option [value]="subj.subject_code"
-          >{{ subj.subject_code }} - {{ subj.subject_name }}</mat-option
-        >
+        <mat-option [value]="subj.subject_name">{{
+          subj.subject_name
+        }}</mat-option>
       </ng-container>
     </mat-select>
     <mat-error *ngIf="subject.invalid">Subject is mandatory!</mat-error>

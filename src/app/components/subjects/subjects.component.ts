@@ -19,7 +19,7 @@ import { EditSubjectsComponent } from '../edit-subjects/edit-subjects.component'
 export class SubjectsComponent implements OnInit {
   subjects: Subject[] = [];
 
-  columnsToDisplay = ['exam_name', 'subject_code', 'subject_name', 'actions'];
+  columnsToDisplay = ['exam_name', 'subject_name', 'actions'];
   dataSource!: MatTableDataSource<any>;
   loading = false;
   searchKey: string = '';

@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Edit Question</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <mat-select placeholder="Select Examination*" formControlName="exam_name">
+      <ng-container *ngFor="let exam of exam$ | async">
+        <mat-option [value]="exam.exam_name">{{ exam.exam_name }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="exam_name.invalid">Exam is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select Subject*" formControlName="subject_name">
+      <ng-container *ngFor="let subj of subject$ | async">
+        <mat-option [value]="subj.subject_name">{{
+          subj.subject_name
+        }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="subject_name.invalid">Subject is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Select Topic*" formControlName="topic_code">
+      <ng-container *ngFor="let topic of topic$ | async">
+        <mat-option [value]="topic.topic_code">{{
+          topic.topic_name
+        }}</mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input placeholder="Year" matInput formControlName="year" />
+    <mat-error *ngIf="year.invalid">Year is mandatory!</mat-error>
+  </mat-form-field>
+  <br />
+  <p>Enter Question below:</p>
+  <angular-editor
+    formControlName="question"
+    [config]="editorConfig"
+  ></angular-editor>
+  <br />
+  <p>Enter Marking Scheme below:</p>
+  <angular-editor
+    formControlName="answer"
+    [config]="editorConfig"
+  ></angular-editor>
+  <br />
+  <mat-form-field>
+    <input placeholder="Marks" matInput formControlName="marks" />
+    <mat-error *ngIf="marks.invalid">Marks is mandatory!</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button *ngIf="form.valid" mat-raised-button color="primary" (click)="save()">
+    Save
+  </button>
+  <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+</mat-dialog-actions>

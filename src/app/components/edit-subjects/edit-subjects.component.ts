@@ -26,7 +26,6 @@ export class EditSubjectsComponent implements OnInit {
     this.subject = subject;
     this.form = this.fb.group({
       exam_name: [subject.exam_name, Validators.required],
-      subject_code: [subject.subject_code, Validators.required],
       subject_name: [subject.subject_name, Validators.required],
     });
   }
@@ -48,10 +47,6 @@ export class EditSubjectsComponent implements OnInit {
 
   get exam_name() {
     return this.form.controls['exam_name'];
-  }
-
-  get subject_code() {
-    return this.form.controls['subject_code'];
   }
 
   get subject_name() {

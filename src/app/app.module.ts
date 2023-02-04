@@ -25,6 +25,9 @@ import { EditSubjectsComponent } from './components/edit-subjects/edit-subjects.
 import { TopicsComponent } from './components/topics/topics.component';
 import { AddTopicsComponent } from './components/add-topics/add-topics.component';
 import { EditTopicsComponent } from './components/edit-topics/edit-topics.component';
+import { QandasComponent } from './components/qandas/qandas.component';
+import { AddQandasComponent } from './components/add-qandas/add-qandas.component';
+import { EditQandasComponent } from './components/edit-qandas/edit-qandas.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import { EditTopicsComponent } from './components/edit-topics/edit-topics.compon
     TopicsComponent,
     AddTopicsComponent,
     EditTopicsComponent,
+    QandasComponent,
+    AddQandasComponent,
+    EditQandasComponent,
   ],
   imports: [
     AngularEditorModule,

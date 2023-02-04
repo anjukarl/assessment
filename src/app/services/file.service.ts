@@ -4,7 +4,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Univ, Exam, Subject, Topic } from '../shared/models';
+import { Univ, Exam, Subject, Topic, QandA } from '../shared/models';
 import { convertSnaps } from '../shared/utils';
 
 @Injectable({
@@ -15,6 +15,38 @@ export class FileService {
     private db: AngularFirestore,
     private storage: AngularFireStorage
   ) {}
+
+  /*
+    CRUD operations on QandAs
+  */
+
+  loadQandAs(): Observable<QandA[]> {
+    return this.db
+      .collection('qandas')
+      .get()
+      .pipe(map((results) => convertSnaps<QandA>(results)));
+  }
+
+  deleteQandA(qandaId: string) {
+    return from(this.db.doc(`qandas/${qandaId}`).delete());
+  }
+
+  updateQandA(qandaId: string, changes: Partial<QandA>): Observable<any> {
+    return from(this.db.doc(`qandas/${qandaId}`).update(changes));
+  }
+
+  createQandA(newQanda: Partial<QandA>) {
+    let save$: Observable<any>;
+    save$ = from(this.db.collection('qandas').add(newQanda));
+    return save$.pipe(
+      map((res) => {
+        return {
+          id: res.id,
+          ...newQanda,
+        };
+      })
+    );
+  }
 
   /*
     CRUD operations on Topics

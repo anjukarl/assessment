@@ -7,19 +7,26 @@ import { finalize } from 'rxjs';
 
 import { FileService } from '../../services/file.service';
 import { DialogService } from '../../services/dialog.service';
-import { Topic } from '../../shared/models';
-import { AddTopicsComponent } from '../add-topics/add-topics.component';
-import { EditTopicsComponent } from '../edit-topics/edit-topics.component';
+import { QandA } from '../../shared/models';
+import { AddQandasComponent } from '../add-qandas/add-qandas.component';
+import { EditQandasComponent } from '../edit-qandas/edit-qandas.component';
 
 @Component({
-  selector: 'app-topics',
-  templateUrl: './topics.component.html',
-  styleUrls: ['./topics.component.css'],
+  selector: 'app-qandas',
+  templateUrl: './qandas.component.html',
+  styleUrls: ['./qandas.component.css'],
 })
-export class TopicsComponent implements OnInit {
-  topics: Topic[] = [];
+export class QandasComponent implements OnInit {
+  qandas: QandA[] = [];
 
-  columnsToDisplay = ['subject_name', 'topic_name', 'actions'];
+  columnsToDisplay = [
+    'exam_name',
+    'subject_name',
+    'topic_code',
+    'year',
+    'marks',
+    'actions',
+  ];
   dataSource!: MatTableDataSource<any>;
   loading = false;
   searchKey: string = '';
@@ -34,16 +41,16 @@ export class TopicsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.reloadTopics();
+    this.reloadQandAs();
   }
 
-  reloadTopics() {
+  reloadQandAs() {
     this.loading = true;
     this.fileService
-      .loadTopics()
+      .loadQandAs()
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe((topicsList) => {
-        this.dataSource = new MatTableDataSource(topicsList);
+      .subscribe((qandasList) => {
+        this.dataSource = new MatTableDataSource(qandasList);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
@@ -58,48 +65,48 @@ export class TopicsComponent implements OnInit {
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
   }
 
-  addTopic() {
+  addQandA() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '500px';
+    dialogConfig.minWidth = '80%';
 
     this.dialog
-      .open(AddTopicsComponent, dialogConfig)
+      .open(AddQandasComponent, dialogConfig)
       .afterClosed()
       .subscribe(() => {
-        this.reloadTopics();
+        this.reloadQandAs();
         this.onSearchClear();
       });
   }
 
-  updateTopic(topic: Topic) {
+  updateQandA(qanda: QandA) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '500px';
-    dialogConfig.data = topic;
+    dialogConfig.minWidth = '80%';
+    dialogConfig.data = qanda;
 
     this.dialog
-      .open(EditTopicsComponent, dialogConfig)
+      .open(EditQandasComponent, dialogConfig)
       .afterClosed()
       .subscribe(() => {
-        this.reloadTopics();
+        this.reloadQandAs();
         this.onSearchClear();
       });
   }
 
-  deleteTopic(topic: Topic) {
+  deleteQandA(qanda: QandA) {
     this.dialogService
       .openConfirmDialog('Are you sure you want to delete?')
       .afterClosed()
       .subscribe((res) => {
         if (res) {
           this.fileService
-            .deleteTopic(topic.id!)
-            .pipe(finalize(() => this.reloadTopics()))
+            .deleteQandA(qanda.id!)
+            .pipe(finalize(() => this.reloadQandAs()))
             .subscribe();
         }
       });

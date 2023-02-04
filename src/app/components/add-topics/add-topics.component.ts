@@ -42,11 +42,12 @@ export class AddTopicsComponent implements OnInit {
 
   saveTopicInfo() {
     let newTopic: Partial<Topic> = {};
-    newTopic.subject_code = this.form.value.subject;
+    newTopic.subject_name = this.form.value.subject;
     newTopic.topic_name = this.form.value.topic;
-    newTopic.topic_code = `${
-      this.form.value.subject
-    }-${this.form.value.topic.substr(0, 4)}`;
+    newTopic.topic_code = `${this.form.value.subject.substr(
+      -5,
+      4
+    )}-${this.form.value.topic.substr(0, 4)}`;
     this.fileService.createTopic(newTopic);
   }
 

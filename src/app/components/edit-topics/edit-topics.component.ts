@@ -25,7 +25,7 @@ export class EditTopicsComponent implements OnInit {
   ) {
     this.currtopic = topic;
     this.form = this.fb.group({
-      subject: [this.currtopic.subject_code, Validators.required],
+      subject: [this.currtopic.subject_name, Validators.required],
       topic: [this.currtopic.topic_name, Validators.required],
     });
   }
@@ -36,11 +36,12 @@ export class EditTopicsComponent implements OnInit {
 
   save() {
     let changes: Partial<Topic> = {};
-    changes.subject_code = this.form.value.subject;
+    changes.subject_name = this.form.value.subject;
     changes.topic_name = this.form.value.topic;
-    changes.topic_code = `${
-      this.form.value.subject
-    }-${this.form.value.topic.substr(0, 4)}`;
+    changes.topic_code = `${this.form.value.subject.substr(
+      -5,
+      4
+    )}-${this.form.value.topic.substr(0, 4)}`;
 
     this.fileService.updateTopic(this.currtopic.id!, changes).subscribe(() => {
       this.dialogRef.close(changes);
