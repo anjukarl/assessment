@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'subjects', component: SubjectsComponent },
   { path: 'topics', component: TopicsComponent },
   { path: 'questions', component: QandasComponent },
-  { path: '', redirectTo: '/univs', pathMatch: 'full' },
+  { path: '', redirectTo: '/questions', pathMatch: 'full' },
 ];
 
 @NgModule({
