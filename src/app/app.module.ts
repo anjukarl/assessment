@@ -10,7 +10,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
-import { AppComponent } from './app.component';
+import { AppComponent, TrustHtmlPipe } from './app.component';
 import { environment } from '../environments/environment';
 import { UnivsComponent } from './components/univs/univs.component';
 import { AddUnivsComponent } from './components/add-univs/add-univs.component';
@@ -28,6 +28,7 @@ import { EditTopicsComponent } from './components/edit-topics/edit-topics.compon
 import { QandasComponent } from './components/qandas/qandas.component';
 import { AddQandasComponent } from './components/add-qandas/add-qandas.component';
 import { EditQandasComponent } from './components/edit-qandas/edit-qandas.component';
+import { ViewQandasComponent } from './components/view-qandas/view-qandas.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,8 @@ import { EditQandasComponent } from './components/edit-qandas/edit-qandas.compon
     QandasComponent,
     AddQandasComponent,
     EditQandasComponent,
+    TrustHtmlPipe,
+    ViewQandasComponent,
   ],
   imports: [
     AngularEditorModule,

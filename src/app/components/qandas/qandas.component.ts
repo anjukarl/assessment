@@ -10,6 +10,7 @@ import { DialogService } from '../../services/dialog.service';
 import { QandA } from '../../shared/models';
 import { AddQandasComponent } from '../add-qandas/add-qandas.component';
 import { EditQandasComponent } from '../edit-qandas/edit-qandas.component';
+import { ViewQandasComponent } from '../view-qandas/view-qandas.component';
 
 @Component({
   selector: 'app-qandas',
@@ -77,6 +78,20 @@ export class QandasComponent implements OnInit {
       .afterClosed()
       .subscribe(() => {
         this.reloadQandAs();
+        this.onSearchClear();
+      });
+  }
+
+  viewQandA(qanda: QandA) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '80%';
+    dialogConfig.data = qanda;
+
+    this.dialog
+      .open(ViewQandasComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(() => {
         this.onSearchClear();
       });
   }

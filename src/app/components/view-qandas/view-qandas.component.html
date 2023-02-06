@@ -1,0 +1,15 @@
+<div mat-dialog-title class="qt">
+  <h3>QUESTION AND MARKING SCHEME</h3>
+  <hr />
+</div>
+<div mat-dialog-content class="qa">
+  <div [innerHTML]="data.question | trusthtml"></div>
+  <br />
+  <hr />
+  <br />
+  <div [innerHTML]="data.answer | trusthtml"></div>
+
+  <div mat-dialog-actions class="qt">
+    <button mat-raised-button color="primary" (click)="onClose()">Close</button>
+  </div>
+</div>
