@@ -29,9 +29,11 @@ export interface QandA {
   year: string;
   subject_name: string;
   topic_code: string;
-  question: string;
-  answer: string;
   marks: number;
+  q_filename: string;
+  a_filename: string;
+  q_url: string;
+  a_url: string;
 }
 
 export interface Assessment {

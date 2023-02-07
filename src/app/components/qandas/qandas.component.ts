@@ -8,9 +8,11 @@ import { finalize } from 'rxjs';
 import { FileService } from '../../services/file.service';
 import { DialogService } from '../../services/dialog.service';
 import { QandA } from '../../shared/models';
-import { AddQandasComponent } from '../add-qandas/add-qandas.component';
-import { EditQandasComponent } from '../edit-qandas/edit-qandas.component';
+// import { AddQandasComponent } from '../add-qandas/add-qandas.component';
+// import { EditQandasComponent } from '../edit-qandas/edit-qandas.component';
 import { ViewQandasComponent } from '../view-qandas/view-qandas.component';
+import { AddQandas2Component } from '../add-qandas2/add-qandas2.component';
+import { EditQandas2Component } from '../edit-qandas2/edit-qandas2.component';
 
 @Component({
   selector: 'app-qandas',
@@ -71,10 +73,10 @@ export class QandasComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '80%';
+    dialogConfig.minWidth = '60%';
 
     this.dialog
-      .open(AddQandasComponent, dialogConfig)
+      .open(AddQandas2Component, dialogConfig)
       .afterClosed()
       .subscribe(() => {
         this.reloadQandAs();
@@ -101,11 +103,11 @@ export class QandasComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '80%';
+    dialogConfig.minWidth = '60%';
     dialogConfig.data = qanda;
 
     this.dialog
-      .open(EditQandasComponent, dialogConfig)
+      .open(EditQandas2Component, dialogConfig)
       .afterClosed()
       .subscribe(() => {
         this.reloadQandAs();

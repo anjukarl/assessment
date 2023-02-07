@@ -29,6 +29,8 @@ import { QandasComponent } from './components/qandas/qandas.component';
 import { AddQandasComponent } from './components/add-qandas/add-qandas.component';
 import { EditQandasComponent } from './components/edit-qandas/edit-qandas.component';
 import { ViewQandasComponent } from './components/view-qandas/view-qandas.component';
+import { AddQandas2Component } from './components/add-qandas2/add-qandas2.component';
+import { EditQandas2Component } from './components/edit-qandas2/edit-qandas2.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { ViewQandasComponent } from './components/view-qandas/view-qandas.compon
     EditQandasComponent,
     TrustHtmlPipe,
     ViewQandasComponent,
+    AddQandas2Component,
+    EditQandas2Component,
   ],
   imports: [
     AngularEditorModule,

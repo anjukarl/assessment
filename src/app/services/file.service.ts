@@ -22,22 +22,22 @@ export class FileService {
 
   loadQandAs(): Observable<QandA[]> {
     return this.db
-      .collection('qandas')
+      .collection('qandas2')
       .get()
       .pipe(map((results) => convertSnaps<QandA>(results)));
   }
 
   deleteQandA(qandaId: string) {
-    return from(this.db.doc(`qandas/${qandaId}`).delete());
+    return from(this.db.doc(`qandas2/${qandaId}`).delete());
   }
 
   updateQandA(qandaId: string, changes: Partial<QandA>): Observable<any> {
-    return from(this.db.doc(`qandas/${qandaId}`).update(changes));
+    return from(this.db.doc(`qandas2/${qandaId}`).update(changes));
   }
 
   createQandA(newQanda: Partial<QandA>) {
     let save$: Observable<any>;
-    save$ = from(this.db.collection('qandas').add(newQanda));
+    save$ = from(this.db.collection('qandas2').add(newQanda));
     return save$.pipe(
       map((res) => {
         return {

@@ -1,18 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable } from 'rxjs';
 
 import { FileService } from '../../services/file.service';
 import { Exam, Subject, Topic, QandA } from '../../shared/models';
 
 @Component({
-  selector: 'app-edit-qandas',
-  templateUrl: './edit-qandas.component.html',
-  styleUrls: ['./edit-qandas.component.css'],
+  selector: 'app-edit-qandas2',
+  templateUrl: './edit-qandas2.component.html',
+  styleUrls: ['./edit-qandas2.component.css'],
 })
-export class EditQandasComponent implements OnInit {
+export class EditQandas2Component implements OnInit {
   form!: FormGroup;
   canClose = true;
   exam$!: Observable<Exam[]>;
@@ -20,23 +19,8 @@ export class EditQandasComponent implements OnInit {
   topic$!: Observable<Topic[]>;
   currqanda!: QandA;
 
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '60vh',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: '80vw',
-    minWidth: '0',
-    translate: 'no',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter Question / Marking Scheme here...',
-    defaultFontName: 'Arial',
-  };
-
   constructor(
-    private dialogRef: MatDialogRef<EditQandasComponent>,
+    private dialogRef: MatDialogRef<EditQandas2Component>,
     private fb: FormBuilder,
     private fileService: FileService,
     @Inject(MAT_DIALOG_DATA) qanda: QandA
@@ -47,8 +31,6 @@ export class EditQandasComponent implements OnInit {
       subject_name: [this.currqanda.subject_name, Validators.required],
       topic_code: [this.currqanda.topic_code],
       year: [this.currqanda.year, Validators.required],
-      // question: [this.currqanda.question, Validators.required],
-      // answer: [this.currqanda.answer, Validators.required],
       marks: [this.currqanda.marks, Validators.required],
     });
   }
@@ -80,14 +62,6 @@ export class EditQandasComponent implements OnInit {
 
   get year() {
     return this.form.controls['year'];
-  }
-
-  get question() {
-    return this.form.controls['question'];
-  }
-
-  get answer() {
-    return this.form.controls['answer'];
   }
 
   get marks() {

@@ -71,8 +71,8 @@ export class AddQandasComponent implements OnInit {
     newQandA.subject_name = this.form.value.subject;
     newQandA.topic_code = this.form.value.topic ? this.form.value.topic : '';
     newQandA.year = this.form.value.year;
-    newQandA.question = this.form.value.question;
-    newQandA.answer = this.form.value.answer;
+    // newQandA.question = this.form.value.question;
+    // newQandA.answer = this.form.value.answer;
     newQandA.marks = +this.form.value.marks;
 
     this.fileService.createQandA(newQandA);

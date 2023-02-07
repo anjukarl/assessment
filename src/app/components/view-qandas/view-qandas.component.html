@@ -3,13 +3,17 @@
   <hr />
 </div>
 <div mat-dialog-content class="qa">
-  <div [innerHTML]="data.question | trusthtml"></div>
+  <!-- <div [innerHTML]="data.question | trusthtml"></div>
   <br />
   <hr />
   <br />
-  <div [innerHTML]="data.answer | trusthtml"></div>
-
-  <div mat-dialog-actions class="qt">
-    <button mat-raised-button color="primary" (click)="onClose()">Close</button>
-  </div>
+  <div [innerHTML]="data.answer | trusthtml"></div> -->
+  <h3>QUESTION</h3>
+  <img [src]="data.q_url" alt="question" />
+  <mat-divider></mat-divider>
+  <h3>ANSWER</h3>
+  <img [src]="data.a_url" alt="answer" />
+</div>
+<div mat-dialog-actions class="qt">
+  <button mat-raised-button color="primary" (click)="onClose()">Close</button>
 </div>
