@@ -42,9 +42,10 @@
   </mat-form-field>
 
   <div>
-    <button mat-button color="primary" (click)="question.click()">
+    <button mat-stroked-button color="primary" (click)="question.click()">
       Select Question File
     </button>
+    <p class="dispin" *ngIf="questionFile">{{ questionFile }}</p>
     <input
       #question
       (change)="uploadQFile($event)"
@@ -52,11 +53,12 @@
       type="file"
     />
   </div>
-
+  <br />
   <div>
-    <button mat-button color="primary" (click)="answer.click()">
+    <button mat-stroked-button color="primary" (click)="answer.click()">
       Select Answer File
     </button>
+    <p class="dispin" *ngIf="answerFile">{{ answerFile }}</p>
     <input
       #answer
       (change)="uploadAFile($event)"

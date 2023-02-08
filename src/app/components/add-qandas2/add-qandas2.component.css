@@ -3,3 +3,8 @@ mat-dialog-content {
   display: flex;
   flex-direction: column;
 }
+
+.dispin {
+  display: inline;
+  padding-left: 1em;
+}

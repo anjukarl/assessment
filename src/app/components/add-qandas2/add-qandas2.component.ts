@@ -61,6 +61,9 @@ export class AddQandas2Component implements OnInit {
     const file = event.target.files[0];
     this.canClose = false;
     this.questionFile = file.name;
+    this.questionFile = this.questionFile
+      .split('.')
+      .join('-' + Date.now() + '.');
     const filePath = `/qandas/${this.questionFile}`;
 
     const storageRef = this.storage.ref(filePath);
@@ -86,6 +89,7 @@ export class AddQandas2Component implements OnInit {
     const file = event.target.files[0];
     this.canClose = false;
     this.answerFile = file.name;
+    this.answerFile = this.answerFile.split('.').join('-' + Date.now() + '.');
     const filePath = `/qandas/${this.answerFile}`;
 
     const storageRef = this.storage.ref(filePath);
