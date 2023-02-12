@@ -66,7 +66,6 @@
       type="file"
     />
   </div>
-  <br /><br />
   <div>
     <p *ngIf="questionFile || answerFile">Uploading...</p>
   </div>
@@ -79,7 +78,7 @@
 
 <mat-dialog-actions>
   <button
-    *ngIf="form.valid && questionFile && answerFile"
+    *ngIf="form.valid && canClose"
     mat-raised-button
     color="primary"
     (click)="save()"

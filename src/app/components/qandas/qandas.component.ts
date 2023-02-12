@@ -27,6 +27,7 @@ export class QandasComponent implements OnInit {
     'subject_name',
     'topic_code',
     'year',
+    'q_filename',
     'marks',
     'actions',
   ];

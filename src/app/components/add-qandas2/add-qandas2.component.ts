@@ -18,7 +18,7 @@ export class AddQandas2Component implements OnInit {
   // questionChanges$!: Observable<number>;
   // answerChanges$!: Observable<number>;
   percentageChanges$!: Observable<number>;
-  canClose = true;
+  canClose = false;
   exam$!: Observable<Exam[]>;
   subject$!: Observable<Subject[]>;
   topic$!: Observable<Topic[]>;
@@ -77,8 +77,7 @@ export class AddQandas2Component implements OnInit {
         finalize(() => {
           storageRef.getDownloadURL().subscribe((downloadUrl) => {
             this.questionUrl = downloadUrl;
-            this.canClose = true;
-            console.log('Q file & url: ', this.questionFile, this.questionUrl);
+            // this.canClose = true;
           });
         })
       )
@@ -104,7 +103,6 @@ export class AddQandas2Component implements OnInit {
           storageRef.getDownloadURL().subscribe((downloadUrl) => {
             this.answerUrl = downloadUrl;
             this.canClose = true;
-            console.log('A file & url: ', this.answerFile, this.answerUrl);
           });
         })
       )
