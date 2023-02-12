@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { FileService } from '../../services/file.service';
@@ -15,8 +15,6 @@ import { Exam, Subject, Topic, QandA } from '../../shared/models';
 })
 export class AddQandas2Component implements OnInit {
   form!: FormGroup;
-  // questionChanges$!: Observable<number>;
-  // answerChanges$!: Observable<number>;
   percentageChanges$!: Observable<number>;
   canClose = false;
   exam$!: Observable<Exam[]>;
@@ -26,6 +24,8 @@ export class AddQandas2Component implements OnInit {
   answerUrl = '';
   questionFile = '';
   answerFile = '';
+  subjectSubscription: Subscription = new Subscription();
+  examSubscription: Subscription = new Subscription();
 
   constructor(
     private dialogRef: MatDialogRef<AddQandas2Component>,
@@ -44,8 +44,31 @@ export class AddQandas2Component implements OnInit {
 
   ngOnInit(): void {
     this.exam$ = this.fileService.loadExams();
-    this.subject$ = this.fileService.loadSubjects();
-    this.topic$ = this.fileService.loadTopics();
+  }
+
+  onSubChange(): void {
+    this.subjectSubscription = this.form
+      .get('subject')!
+      .valueChanges.subscribe((subj) => {
+        this.topic$ = this.fileService.loadTopicsForSubject(subj);
+      });
+  }
+
+  onExamChange(): void {
+    this.examSubscription = this.form
+      .get('exam')!
+      .valueChanges.subscribe((exam) => {
+        this.subject$ = this.fileService.loadSubjectsForExam(exam);
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.subjectSubscription) {
+      this.subjectSubscription.unsubscribe();
+    }
+    if (this.examSubscription) {
+      this.examSubscription.unsubscribe();
+    }
   }
 
   save() {
@@ -77,7 +100,6 @@ export class AddQandas2Component implements OnInit {
         finalize(() => {
           storageRef.getDownloadURL().subscribe((downloadUrl) => {
             this.questionUrl = downloadUrl;
-            // this.canClose = true;
           });
         })
       )

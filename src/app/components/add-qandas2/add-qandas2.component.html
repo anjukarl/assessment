@@ -2,7 +2,12 @@
 
 <mat-dialog-content [formGroup]="form">
   <mat-form-field>
-    <mat-select placeholder="Select Examination*" formControlName="exam">
+    <mat-select
+      placeholder="Select Examination*"
+      formControlName="exam"
+      (focus)="onExamChange()"
+      (selectionChange)="onExamChange()"
+    >
       <ng-container *ngFor="let exam of exam$ | async">
         <mat-option [value]="exam.exam_name">{{ exam.exam_name }}</mat-option>
       </ng-container>
@@ -11,7 +16,12 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-select placeholder="Select Subject*" formControlName="subject">
+    <mat-select
+      placeholder="Select Subject*"
+      formControlName="subject"
+      (focus)="onSubChange()"
+      (selectionChange)="onSubChange()"
+    >
       <ng-container *ngFor="let subj of subject$ | async">
         <mat-option [value]="subj.subject_name">{{
           subj.subject_name

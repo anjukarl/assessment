@@ -43,6 +43,13 @@ export class EditQandas2Component implements OnInit {
 
   save() {
     const changes = this.form.value;
+    if (this.currqanda.subject_name !== this.form.value.subject_name) {
+      changes.topic_code = `${this.form.value.subject_name.substr(
+        -5,
+        4
+      )}-${this.currqanda.topic_code.substring(-1, 4)}`;
+    }
+
     this.fileService.updateQandA(this.currqanda.id!, changes).subscribe(() => {
       this.dialogRef.close(changes);
     });

@@ -59,6 +59,15 @@ export class FileService {
       .pipe(map((results) => convertSnaps<Topic>(results)));
   }
 
+  loadTopicsForSubject(subj: string): Observable<Topic[]> {
+    return this.db
+      .collection('topics', (ref) =>
+        ref.where('subject_name', '==', subj).orderBy('topic_code')
+      )
+      .get()
+      .pipe(map((results) => convertSnaps<Topic>(results)));
+  }
+
   deleteTopic(topicId: string) {
     return from(this.db.doc(`topics/${topicId}`).delete());
   }
@@ -87,6 +96,13 @@ export class FileService {
   loadSubjects(): Observable<Subject[]> {
     return this.db
       .collection('subjects', (ref) => ref.orderBy('subject_code'))
+      .get()
+      .pipe(map((results) => convertSnaps<Subject>(results)));
+  }
+
+  loadSubjectsForExam(exam: string): Observable<Subject[]> {
+    return this.db
+      .collection('subjects', (ref) => ref.where('exam_name', '==', exam))
       .get()
       .pipe(map((results) => convertSnaps<Subject>(results)));
   }
