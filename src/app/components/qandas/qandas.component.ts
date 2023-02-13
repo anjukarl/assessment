@@ -123,7 +123,7 @@ export class QandasComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.fileService
-            .deleteQandA(qanda.id!)
+            .deleteQandA(qanda.id!, qanda.a_filename, qanda.q_filename)
             .pipe(finalize(() => this.reloadQandAs()))
             .subscribe();
         }

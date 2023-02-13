@@ -11,6 +11,7 @@ import { convertSnaps } from '../shared/utils';
   providedIn: 'root',
 })
 export class FileService {
+  private basePath = '/qandas';
   constructor(
     private db: AngularFirestore,
     private storage: AngularFireStorage
@@ -27,7 +28,10 @@ export class FileService {
       .pipe(map((results) => convertSnaps<QandA>(results)));
   }
 
-  deleteQandA(qandaId: string) {
+  deleteQandA(qandaId: string, aFile: string, qFile: string) {
+    const storageRef = this.storage.ref(this.basePath);
+    storageRef.child(aFile).delete();
+    storageRef.child(qFile).delete();
     return from(this.db.doc(`qandas2/${qandaId}`).delete());
   }
 
