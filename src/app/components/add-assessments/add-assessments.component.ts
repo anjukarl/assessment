@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MatDialog,
+  MatDialogConfig,
+} from '@angular/material/dialog';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { FileService } from '../../services/file.service';
 import { Exam, Subject, Topic, QandA, Assessment } from '../../shared/models';
+import { ViewQuestionsComponent } from '../view-questions/view-questions.component';
 
 @Component({
   selector: 'app-add-assessments',
@@ -33,6 +38,7 @@ export class AddAssessmentsComponent implements OnInit {
     private dialogRef: MatDialogRef<AddAssessmentsComponent>,
     private fb: FormBuilder,
     private fileService: FileService,
+    private dialog: MatDialog,
     private storage: AngularFireStorage
   ) {
     this.form = this.fb.group({
@@ -111,8 +117,16 @@ export class AddAssessmentsComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  view() {
-    this.dialogRef.close();
+  view(qandas: QandA[]) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.minWidth = '80%';
+    dialogConfig.data = qandas;
+
+    this.dialog
+      .open(ViewQuestionsComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(() => {});
   }
 
   saveAssessmentInfo() {}

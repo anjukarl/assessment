@@ -93,7 +93,7 @@ export class QandasComponent implements OnInit {
       .open(ViewQandasComponent, dialogConfig)
       .afterClosed()
       .subscribe(() => {
-        this.onSearchClear();
+        // this.onSearchClear();
       });
   }
 
