@@ -6,6 +6,7 @@ import { ExamsComponent } from './components/exams/exams.component';
 import { SubjectsComponent } from './components/subjects/subjects.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { QandasComponent } from './components/qandas/qandas.component';
+import { AssessmentsComponent } from './components/assessments/assessments.component';
 
 const routes: Routes = [
   { path: 'univs', component: UnivsComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'subjects', component: SubjectsComponent },
   { path: 'topics', component: TopicsComponent },
   { path: 'questions', component: QandasComponent },
-  { path: '', redirectTo: '/questions', pathMatch: 'full' },
+  { path: 'assessments', component: AssessmentsComponent },
+  { path: '', redirectTo: '/assessments', pathMatch: 'full' },
 ];
 
 @NgModule({

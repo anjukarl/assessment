@@ -1,3 +1,5 @@
+import { serverTimestamp } from 'firebase/firestore';
+
 export interface Univ {
   id?: string;
   univ_name: string;
@@ -38,9 +40,10 @@ export interface QandA {
 
 export interface Assessment {
   id?: string;
-  univ_name: string;
   exam_name: string;
   subject_name: string;
-  assessmentId: string;
-  downloadUrl: string;
+  as_filename: string;
+  as_id: string;
+  as_url: string;
+  marks: number;
 }

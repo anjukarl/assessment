@@ -4,18 +4,60 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Univ, Exam, Subject, Topic, QandA } from '../shared/models';
+import {
+  Univ,
+  Exam,
+  Subject,
+  Topic,
+  QandA,
+  Assessment,
+} from '../shared/models';
 import { convertSnaps } from '../shared/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
-  private basePath = '/qandas';
+  private basePath1 = '/qandas';
+  private basePath2 = '/assessments';
   constructor(
     private db: AngularFirestore,
     private storage: AngularFireStorage
   ) {}
+
+  /*
+    CRUD operations on Assessments
+  */
+
+  loadAssessments(): Observable<Assessment[]> {
+    return this.db
+      .collection('assessments')
+      .get()
+      .pipe(map((results) => convertSnaps<Assessment>(results)));
+  }
+
+  deleteAssessment(assessmentId: string, asFile: string) {
+    const storageRef = this.storage.ref(this.basePath2);
+    storageRef.child(asFile).delete();
+    return from(this.db.doc(`assessments/${assessmentId}`).delete());
+  }
+
+  // updateQandA(qandaId: string, changes: Partial<QandA>): Observable<any> {
+  //   return from(this.db.doc(`qandas2/${qandaId}`).update(changes));
+  // }
+
+  createAssessment(newAssessment: Partial<Assessment>) {
+    let save$: Observable<any>;
+    save$ = from(this.db.collection('assessments').add(newAssessment));
+    return save$.pipe(
+      map((res) => {
+        return {
+          id: res.id,
+          ...newAssessment,
+        };
+      })
+    );
+  }
 
   /*
     CRUD operations on QandAs
@@ -28,8 +70,15 @@ export class FileService {
       .pipe(map((results) => convertSnaps<QandA>(results)));
   }
 
+  loadQandAsForTopics(topics: string[]): Observable<QandA[]> {
+    return this.db
+      .collection('qandas2', (ref) => ref.where('topic_code', 'in', topics))
+      .get()
+      .pipe(map((results) => convertSnaps<QandA>(results)));
+  }
+
   deleteQandA(qandaId: string, aFile: string, qFile: string) {
-    const storageRef = this.storage.ref(this.basePath);
+    const storageRef = this.storage.ref(this.basePath1);
     storageRef.child(aFile).delete();
     storageRef.child(qFile).delete();
     return from(this.db.doc(`qandas2/${qandaId}`).delete());
@@ -106,7 +155,9 @@ export class FileService {
 
   loadSubjectsForExam(exam: string): Observable<Subject[]> {
     return this.db
-      .collection('subjects', (ref) => ref.where('exam_name', '==', exam))
+      .collection('subjects', (ref) =>
+        ref.where('exam_name', '==', exam).orderBy('subject_name')
+      )
       .get()
       .pipe(map((results) => convertSnaps<Subject>(results)));
   }

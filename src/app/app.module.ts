@@ -31,6 +31,9 @@ import { EditQandasComponent } from './components/edit-qandas/edit-qandas.compon
 import { ViewQandasComponent } from './components/view-qandas/view-qandas.component';
 import { AddQandas2Component } from './components/add-qandas2/add-qandas2.component';
 import { EditQandas2Component } from './components/edit-qandas2/edit-qandas2.component';
+import { AssessmentsComponent } from './components/assessments/assessments.component';
+import { AddAssessmentsComponent } from './components/add-assessments/add-assessments.component';
+import { ViewAssessmentsComponent } from './components/view-assessments/view-assessments.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { EditQandas2Component } from './components/edit-qandas2/edit-qandas2.com
     ViewQandasComponent,
     AddQandas2Component,
     EditQandas2Component,
+    AssessmentsComponent,
+    AddAssessmentsComponent,
+    ViewAssessmentsComponent,
   ],
   imports: [
     AngularEditorModule,

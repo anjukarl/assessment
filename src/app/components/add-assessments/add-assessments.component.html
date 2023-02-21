@@ -1,0 +1,90 @@
+<div mat-dialog-title class="dispend">
+  <span>Add New Assessment</span>
+  <span>Total Marks: {{ totalMarks }}</span>
+</div>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <mat-select
+      placeholder="Select Examination"
+      formControlName="exam"
+      (focus)="onExamChange()"
+      (selectionChange)="onExamChange()"
+    >
+      <ng-container *ngFor="let exam of exam$ | async">
+        <mat-option [value]="exam.exam_name">{{ exam.exam_name }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="exam.invalid">Exam is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select
+      placeholder="Select Subject"
+      formControlName="subject"
+      (focus)="onSubChange()"
+      (selectionChange)="onSubChange()"
+    >
+      <ng-container *ngFor="let subj of subject$ | async">
+        <mat-option [value]="subj.subject_name">{{
+          subj.subject_name
+        }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="subject.invalid">Subject is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select
+      placeholder="Select Topics"
+      formControlName="topics"
+      multiple
+      (focus)="onTopicsChange()"
+      (selectionChange)="onTopicsChange()"
+    >
+      <ng-container *ngFor="let topic of topic$ | async">
+        <mat-option [value]="topic.topic_code">{{
+          topic.topic_name
+        }}</mat-option>
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="topics.invalid">Topic(s) is mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select
+      placeholder="Select Questions"
+      formControlName="questions"
+      multiple
+      (focus)="onQuestionsChange()"
+      (selectionChange)="onQuestionsChange()"
+    >
+      <ng-container *ngFor="let qanda of qanda$ | async">
+        <mat-option [value]="qanda"
+          >{{ qanda.q_filename }} : Marks: {{ qanda.marks }}</mat-option
+        >
+      </ng-container>
+    </mat-select>
+    <mat-error *ngIf="questions.invalid">Questions are mandatory!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input placeholder="Assessment ID" matInput formControlName="asid" />
+    <mat-error *ngIf="asid.invalid">Assessment ID is mandatory!</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button *ngIf="form.valid" mat-raised-button color="primary" (click)="save()">
+    Save
+  </button>
+  <button
+    *ngIf="qandA.length > 0"
+    mat-stroked-button
+    color="primary"
+    (click)="view()"
+  >
+    View Selected Questions
+  </button>
+  <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+</mat-dialog-actions>

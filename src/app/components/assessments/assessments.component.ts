@@ -7,26 +7,23 @@ import { finalize } from 'rxjs';
 
 import { FileService } from '../../services/file.service';
 import { DialogService } from '../../services/dialog.service';
-import { QandA } from '../../shared/models';
-import { ViewQandasComponent } from '../view-qandas/view-qandas.component';
-import { AddQandas2Component } from '../add-qandas2/add-qandas2.component';
-import { EditQandas2Component } from '../edit-qandas2/edit-qandas2.component';
+import { Assessment } from '../../shared/models';
+import { ViewAssessmentsComponent } from '../view-assessments/view-assessments.component';
+import { AddAssessmentsComponent } from '../add-assessments/add-assessments.component';
 
 @Component({
-  selector: 'app-qandas',
-  templateUrl: './qandas.component.html',
-  styleUrls: ['./qandas.component.css'],
+  selector: 'app-assessments',
+  templateUrl: './assessments.component.html',
+  styleUrls: ['./assessments.component.css'],
 })
-export class QandasComponent implements OnInit {
-  qandas: QandA[] = [];
+export class AssessmentsComponent implements OnInit {
+  assessments: Assessment[] = [];
 
   columnsToDisplay = [
     'exam_name',
     'subject_name',
-    'topic_code',
-    'year',
-    'q_filename',
-    'marks',
+    'as_id',
+    'as_filename',
     'actions',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -43,16 +40,16 @@ export class QandasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.reloadQandAs();
+    this.reloadAssessments();
   }
 
-  reloadQandAs() {
+  reloadAssessments() {
     this.loading = true;
     this.fileService
-      .loadQandAs()
+      .loadAssessments()
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe((qandasList) => {
-        this.dataSource = new MatTableDataSource(qandasList);
+      .subscribe((assList) => {
+        this.dataSource = new MatTableDataSource(assList);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
@@ -67,62 +64,45 @@ export class QandasComponent implements OnInit {
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
   }
 
-  addQandA() {
+  addAssessment() {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '60%';
+    dialogConfig.minWidth = '80%';
 
     this.dialog
-      .open(AddQandas2Component, dialogConfig)
+      .open(AddAssessmentsComponent, dialogConfig)
       .afterClosed()
       .subscribe(() => {
-        this.reloadQandAs();
+        this.reloadAssessments();
         this.onSearchClear();
       });
   }
 
-  viewQandA(qanda: QandA) {
+  viewAssessment(assessment: Assessment) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = '80%';
-    dialogConfig.data = qanda;
+    dialogConfig.data = assessment;
 
     this.dialog
-      .open(ViewQandasComponent, dialogConfig)
+      .open(ViewAssessmentsComponent, dialogConfig)
       .afterClosed()
       .subscribe(() => {
         this.onSearchClear();
       });
   }
 
-  updateQandA(qanda: QandA) {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '60%';
-    dialogConfig.data = qanda;
-
-    this.dialog
-      .open(EditQandas2Component, dialogConfig)
-      .afterClosed()
-      .subscribe(() => {
-        this.reloadQandAs();
-        this.onSearchClear();
-      });
-  }
-
-  deleteQandA(qanda: QandA) {
+  deleteAssessment(assessment: Assessment) {
     this.dialogService
       .openConfirmDialog('Are you sure you want to delete?')
       .afterClosed()
       .subscribe((res) => {
         if (res) {
           this.fileService
-            .deleteQandA(qanda.id!, qanda.a_filename, qanda.q_filename)
-            .pipe(finalize(() => this.reloadQandAs()))
+            .deleteAssessment(assessment.id!, assessment.as_filename)
+            .pipe(finalize(() => this.reloadAssessments()))
             .subscribe();
         }
       });
