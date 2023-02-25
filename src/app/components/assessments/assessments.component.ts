@@ -19,13 +19,7 @@ import { AddAssessmentsComponent } from '../add-assessments/add-assessments.comp
 export class AssessmentsComponent implements OnInit {
   assessments: Assessment[] = [];
 
-  columnsToDisplay = [
-    'exam_name',
-    'subject_name',
-    'as_id',
-    'as_filename',
-    'actions',
-  ];
+  columnsToDisplay = ['exam_name', 'subject_name', 'as_filename', 'actions'];
   dataSource!: MatTableDataSource<any>;
   loading = false;
   searchKey: string = '';
@@ -81,17 +75,18 @@ export class AssessmentsComponent implements OnInit {
   }
 
   viewAssessment(assessment: Assessment) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '80%';
-    dialogConfig.data = assessment;
+    window.open(assessment.as_url, '_blank');
+    // const dialogConfig = new MatDialogConfig();
+    // dialogConfig.autoFocus = true;
+    // dialogConfig.minWidth = '80%';
+    // dialogConfig.data = assessment;
 
-    this.dialog
-      .open(ViewAssessmentsComponent, dialogConfig)
-      .afterClosed()
-      .subscribe(() => {
-        this.onSearchClear();
-      });
+    // this.dialog
+    //   .open(ViewAssessmentsComponent, dialogConfig)
+    //   .afterClosed()
+    //   .subscribe(() => {
+    //     this.onSearchClear();
+    //   });
   }
 
   deleteAssessment(assessment: Assessment) {

@@ -20,7 +20,9 @@ import { ViewQuestionsComponent } from '../view-questions/view-questions.compone
 })
 export class AddAssessmentsComponent implements OnInit {
   form!: FormGroup;
+  percentageChanges$!: Observable<number>;
   canClose = false;
+  canShowUpload = false;
   exam$!: Observable<Exam[]>;
   subject$!: Observable<Subject[]>;
   topic$!: Observable<Topic[]>;
@@ -46,7 +48,6 @@ export class AddAssessmentsComponent implements OnInit {
       subject: ['', Validators.required],
       topics: ['', { validators: Validators.required, updateOn: 'blur' }],
       questions: ['', { validators: Validators.required, updateOn: 'blur' }],
-      asid: ['', Validators.required],
     });
   }
 
@@ -126,10 +127,46 @@ export class AddAssessmentsComponent implements OnInit {
     this.dialog
       .open(ViewQuestionsComponent, dialogConfig)
       .afterClosed()
-      .subscribe(() => {});
+      .subscribe(() => {
+        this.canShowUpload = true;
+      });
   }
 
-  saveAssessmentInfo() {}
+  uploadAsFile(event: any) {
+    const file = event.target.files[0];
+    this.canClose = false;
+    this.assessmentFile = file.name;
+
+    const filePath = `/assessments/${this.assessmentFile}`;
+
+    const storageRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+
+    this.percentageChanges$ = task.percentageChanges() as Observable<number>;
+
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          storageRef.getDownloadURL().subscribe((downloadUrl) => {
+            this.assessmentUrl = downloadUrl;
+            this.canClose = true;
+          });
+        })
+      )
+      .subscribe();
+  }
+
+  saveAssessmentInfo() {
+    let newAssessment: Partial<Assessment> = {};
+    newAssessment.exam_name = this.form.value.exam;
+    newAssessment.subject_name = this.form.value.subject;
+    newAssessment.marks = this.totalMarks;
+    newAssessment.as_filename = this.assessmentFile;
+    newAssessment.as_url = this.assessmentUrl;
+
+    this.fileService.createAssessment(newAssessment);
+  }
 
   get exam() {
     return this.form.controls['exam'];

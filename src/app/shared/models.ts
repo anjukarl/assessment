@@ -43,7 +43,6 @@ export interface Assessment {
   exam_name: string;
   subject_name: string;
   as_filename: string;
-  as_id: string;
   as_url: string;
   marks: number;
 }

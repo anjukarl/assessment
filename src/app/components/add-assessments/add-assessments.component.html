@@ -68,23 +68,52 @@
     <mat-error *ngIf="questions.invalid">Questions are mandatory!</mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <input placeholder="Assessment ID" matInput formControlName="asid" />
-    <mat-error *ngIf="asid.invalid">Assessment ID is mandatory!</mat-error>
-  </mat-form-field>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button *ngIf="form.valid" mat-raised-button color="primary" (click)="save()">
-    Save
-  </button>
   <button
     *ngIf="qandA.length > 0"
     mat-stroked-button
     color="primary"
     (click)="view(qandA)"
   >
-    View Selected Questions
+    View Selected Questions and generate PDF file
   </button>
+  <br />
+  <div>
+    <button
+      *ngIf="canShowUpload"
+      mat-stroked-button
+      color="primary"
+      (click)="assessment.click()"
+    >
+      Select Downloaded PDF File
+    </button>
+    <p class="dispin" *ngIf="assessmentFile">{{ assessmentFile }}</p>
+    <input
+      #assessment
+      (change)="uploadAsFile($event)"
+      style="display: none"
+      type="file"
+    />
+  </div>
+  <br />
+  <div>
+    <p *ngIf="assessmentFile">Uploading...</p>
+  </div>
+  <div *ngIf="percentageChanges$ | async as percentage">
+    <mat-progress-bar mode="determinate" [value]="percentage">
+    </mat-progress-bar>
+    <span> {{ percentage / 100 | percent }} </span>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    *ngIf="form.valid && canClose"
+    mat-raised-button
+    color="primary"
+    (click)="save()"
+  >
+    Save
+  </button>
+
   <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
 </mat-dialog-actions>

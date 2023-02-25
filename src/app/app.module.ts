@@ -10,7 +10,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
-import { AppComponent, TrustHtmlPipe } from './app.component';
+import {
+  AppComponent,
+  TrustHtmlPipe,
+  TrustResourceUrlPipe,
+} from './app.component';
 import { environment } from '../environments/environment';
 import { UnivsComponent } from './components/univs/univs.component';
 import { AddUnivsComponent } from './components/add-univs/add-univs.component';
@@ -56,6 +60,7 @@ import { ViewQuestionsComponent } from './components/view-questions/view-questio
     AddQandasComponent,
     EditQandasComponent,
     TrustHtmlPipe,
+    TrustResourceUrlPipe,
     ViewQandasComponent,
     AddQandas2Component,
     EditQandas2Component,

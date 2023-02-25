@@ -17,3 +17,12 @@ export class TrustHtmlPipe implements PipeTransform {
     return this.sanitizer.bypassSecurityTrustHtml(text);
   }
 }
+
+@Pipe({ name: 'trusturl' })
+export class TrustResourceUrlPipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(text: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(text);
+  }
+}

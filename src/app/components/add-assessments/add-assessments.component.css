@@ -9,3 +9,8 @@ mat-dialog-content {
   justify-content: space-between;
   padding-right: 3%;
 }
+
+.dispin {
+  display: inline;
+  padding-left: 1em;
+}

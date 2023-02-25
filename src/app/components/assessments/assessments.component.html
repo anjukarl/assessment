@@ -35,10 +35,6 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
       <td mat-cell *matCellDef="let line">{{ line.subject_name }}</td>
     </ng-container>
-    <ng-container matColumnDef="as_id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Assessment ID</th>
-      <td mat-cell *matCellDef="let line">{{ line.as_id }}</td>
-    </ng-container>
     <ng-container matColumnDef="as_filename">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>PDF Filename</th>
       <td mat-cell *matCellDef="let line">{{ line.as_filename }}</td>

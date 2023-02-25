@@ -15,7 +15,7 @@ export class ViewAssessmentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    document.getElementById('contass')!.innerText = this.data.as_filename;
+    window.open(this.data.as_url, '_blank');
   }
 
   onClose(): void {
