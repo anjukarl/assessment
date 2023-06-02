@@ -19,7 +19,7 @@ import { EditTopicsComponent } from '../edit-topics/edit-topics.component';
 export class TopicsComponent implements OnInit {
   topics: Topic[] = [];
 
-  columnsToDisplay = ['subject_name', 'topic_name', 'actions'];
+  columnsToDisplay = ['exam_name', 'subject_name', 'topic_name', 'actions'];
   dataSource!: MatTableDataSource<any>;
   loading = false;
   searchKey: string = '';

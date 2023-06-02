@@ -20,6 +20,7 @@ export interface Subject {
 
 export interface Topic {
   id?: string;
+  exam_name: string;
   subject_name: string;
   topic_code: string;
   topic_name: string;

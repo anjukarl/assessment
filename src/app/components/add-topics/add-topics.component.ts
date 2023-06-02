@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { FileService } from '../../services/file.service';
-import { Subject, Topic } from '../../shared/models';
+import { Exam, Subject, Topic } from '../../shared/models';
 
 @Component({
   selector: 'app-add-topics',
@@ -15,6 +15,8 @@ export class AddTopicsComponent implements OnInit {
   form!: FormGroup;
   canClose = true;
   subject$!: Observable<Subject[]>;
+  exam$!: Observable<Exam[]>;
+  examSubscription: Subscription = new Subscription();
 
   constructor(
     private dialogRef: MatDialogRef<AddTopicsComponent>,
@@ -22,13 +24,28 @@ export class AddTopicsComponent implements OnInit {
     private fileService: FileService
   ) {
     this.form = this.fb.group({
+      exam: ['', Validators.required],
       subject: ['', Validators.required],
       topic: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.subject$ = this.fileService.loadSubjects();
+    this.exam$ = this.fileService.loadExams();
+  }
+
+  onExamChange(): void {
+    this.examSubscription = this.form
+      .get('exam')!
+      .valueChanges.subscribe((exam) => {
+        this.subject$ = this.fileService.loadSubjectsForExam(exam);
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.examSubscription) {
+      this.examSubscription.unsubscribe();
+    }
   }
 
   save() {
@@ -42,6 +59,7 @@ export class AddTopicsComponent implements OnInit {
 
   saveTopicInfo() {
     let newTopic: Partial<Topic> = {};
+    newTopic.exam_name = this.form.value.exam;
     newTopic.subject_name = this.form.value.subject;
     newTopic.topic_name = this.form.value.topic;
     newTopic.topic_code = `${this.form.value.subject.substr(
@@ -49,6 +67,10 @@ export class AddTopicsComponent implements OnInit {
       4
     )}-${this.form.value.topic.substr(0, 4)}`;
     this.fileService.createTopic(newTopic);
+  }
+
+  get exam() {
+    return this.form.controls['exam'];
   }
 
   get subject() {

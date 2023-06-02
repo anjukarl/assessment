@@ -27,6 +27,10 @@
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="exam_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Exam</th>
+      <td mat-cell *matCellDef="let line">{{ line.exam_name }}</td>
+    </ng-container>
     <ng-container matColumnDef="subject_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
       <td mat-cell *matCellDef="let line">{{ line.subject_name }}</td>

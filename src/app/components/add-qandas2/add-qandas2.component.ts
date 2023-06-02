@@ -24,6 +24,7 @@ export class AddQandas2Component implements OnInit {
   answerUrl = '';
   questionFile = '';
   answerFile = '';
+  currentExam = '';
   subjectSubscription: Subscription = new Subscription();
   examSubscription: Subscription = new Subscription();
 
@@ -50,7 +51,11 @@ export class AddQandas2Component implements OnInit {
     this.subjectSubscription = this.form
       .get('subject')!
       .valueChanges.subscribe((subj) => {
-        this.topic$ = this.fileService.loadTopicsForSubject(subj);
+        const subject = subj;
+        this.topic$ = this.fileService.loadTopicsForSubject(
+          subject,
+          this.currentExam
+        );
       });
   }
 
@@ -58,6 +63,7 @@ export class AddQandas2Component implements OnInit {
     this.examSubscription = this.form
       .get('exam')!
       .valueChanges.subscribe((exam) => {
+        this.currentExam = exam;
         this.subject$ = this.fileService.loadSubjectsForExam(exam);
       });
   }
