@@ -25,6 +25,19 @@
         >Subjects</a
       >
       <a routerLink="topics" routerLinkActive="active" mat-list-item>Topics</a>
+
+      <button
+        class="logout"
+        mat-stroked-button
+        color="primary"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+      <!-- <button mat-icon-button (click)="logout()">
+        Logout
+        <mat-icon>exit_to_app</mat-icon>
+      </button> -->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

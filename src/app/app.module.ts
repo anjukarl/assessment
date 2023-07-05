@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import {
@@ -39,6 +40,9 @@ import { AssessmentsComponent } from './components/assessments/assessments.compo
 import { AddAssessmentsComponent } from './components/add-assessments/add-assessments.component';
 import { ViewAssessmentsComponent } from './components/view-assessments/view-assessments.component';
 import { ViewQuestionsComponent } from './components/view-questions/view-questions.component';
+import { LoginComponent } from './components/login/login.component';
+import { GuardService } from './services/guard.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -68,11 +72,13 @@ import { ViewQuestionsComponent } from './components/view-questions/view-questio
     AddAssessmentsComponent,
     ViewAssessmentsComponent,
     ViewQuestionsComponent,
+    LoginComponent,
   ],
   imports: [
     AngularEditorModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
+    AngularFireAuthModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
@@ -81,7 +87,7 @@ import { ViewQuestionsComponent } from './components/view-questions/view-questio
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [GuardService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
