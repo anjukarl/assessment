@@ -28,16 +28,13 @@
 
       <button
         class="logout"
+        *ngIf="this.authService.isLoggedIn$ | async"
         mat-stroked-button
         color="primary"
         (click)="logout()"
       >
         Logout
       </button>
-      <!-- <button mat-icon-button (click)="logout()">
-        Logout
-        <mat-icon>exit_to_app</mat-icon>
-      </button> -->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

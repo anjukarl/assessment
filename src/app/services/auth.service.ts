@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   loggedIn = false;
-  isLoggedIn = new Subject<boolean>();
+  public isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  private authsub: Subscription = new Subscription();
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
@@ -16,22 +17,24 @@ export class AuthService {
     this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        this.loggedIn = true;
-        this.isLoggedIn.next(true);
+        this.isLoggedIn$.next(true);
         this.router.navigate(['/assessments']);
       })
       .catch((err) => {
-        this.loggedIn = false;
-        this.isLoggedIn.next(false);
+        this.isLoggedIn$.next(false);
       });
   }
 
   isAuthenticated() {
+    this.authsub = this.isLoggedIn$.subscribe((val) => {
+      this.loggedIn = val;
+    });
     return this.loggedIn;
   }
 
   signOut() {
-    this.loggedIn = false;
+    this.isLoggedIn$.next(false);
+    this.authsub.unsubscribe();
     this.afAuth.signOut();
     this.router.navigate(['/login']);
   }

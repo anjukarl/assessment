@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from './services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   sidenav: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   logout() {
     this.authService.signOut();

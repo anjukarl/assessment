@@ -23,7 +23,10 @@
   >
     Login
   </button>
-  <div *ngIf="failedLogin" class="logfail">
+  <div
+    *ngIf="submitted && form.valid && !this.authService.isAuthenticated"
+    class="logfail"
+  >
     <p>Email and/or password invalid!</p>
   </div>
 </div>
